@@ -45,18 +45,19 @@ with open(budget_csv) as csvfile:
     month_of_max = month[index_of_max+1]
     month_of_min = month[index_of_min+1]
 
+    print(f'Financial Analysis')
+    print(f'----------------------------')
     print(f'Total Months: {num_rows - 1}')
     print(f'Total:$ {total}')
-    #print(f'Data: {data}') 
-    #print(f'Data Length: {len(data)}') 
-    #print(f'Diff: {diff}') 
-    #print(f'Diff Length: {len(diff)}') 
-    #print(f'sum: {sum}') 
     print(f'Average Change: {average}')
-    #print(f'index_of_max: {index_of_max}') 
-    #print(f'index_of_min: {index_of_min}') 
-    #print(f'month_of_max: {month_of_max}') 
-    #print(f'month_of_min: {month_of_min}')
     print(f'Greatest Increase in Profits: {month_of_max} : (${max(diff)})')
     print(f'Greatest Decrease in Profits: {month_of_min} : (${min(diff)})') 
      
+    with open('analysis/PyBank_Output.txt', 'w') as output:
+        print(f'Financial Analysis', file=output)
+        print(f'----------------------------', file=output)
+        print(f'Total Months: {num_rows - 1}', file=output)
+        print(f'Total:$ {total}', file=output)
+        print(f'Average Change: {average}', file=output)
+        print(f'Greatest Increase in Profits: {month_of_max} : (${max(diff)})', file=output)
+        print(f'Greatest Decrease in Profits: {month_of_min} : (${min(diff)})', file=output)
