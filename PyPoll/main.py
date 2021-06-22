@@ -32,13 +32,18 @@ with open(election_data) as pollFile:
     print(f'-------------------------')
     print(f'Total Votes: {num_rows - 1}')
     print(f'-------------------------')    
-    print(f'Candidates: {candidate}')
-    print(f'all votes: {len(all_votes)}')
-    print(f'all candidate: {len(candidate)}')
-    print(f'Counter: {counter}')
+    #print(f'Candidates: {candidate}')
+    #print(f'all votes: {len(all_votes)}')
+    #print(f'all candidate: {len(candidate)}')
+    #print(f'Counter: {counter}')
 
     for person in counter:
         key = person
         value = counter[key]
-        percent = int(value) / len(all_votes)
-        print(f'{key}: {percent} ({value})')
+        percent = '{:.3f}'.format( (int(value) / len(all_votes)) * 100 )
+        print(f'{key}: {percent}% ({value})')
+
+    print(f'-------------------------')
+    winner = counter.most_common(1)[0][0] if counter else None
+    print(f'Winner: {winner}')
+    print(f'-------------------------')
