@@ -14,36 +14,40 @@ election_data = os.path.join ( 'Resources', 'election_data.csv')
 with open(election_data) as pollFile:
     csv_reader = csv.reader (pollFile, delimiter=',')
     num_rows = 0
-    candidate = []
     all_votes = []
 
     for row in csv_reader:
         if num_rows > 0:
             all_votes.append(row[2])
-            if row[2] not in candidate:
-                candidate.append(row[2])
 
         num_rows += 1
     
-    #from collections import Counter
     counter = collections.Counter (all_votes)
 
     print(f'Election Results')
     print(f'-------------------------')
     print(f'Total Votes: {num_rows - 1}')
-    print(f'-------------------------')    
-    #print(f'Candidates: {candidate}')
-    #print(f'all votes: {len(all_votes)}')
-    #print(f'all candidate: {len(candidate)}')
-    #print(f'Counter: {counter}')
-
-    for person in counter:
-        key = person
-        value = counter[key]
-        percent = '{:.3f}'.format( (int(value) / len(all_votes)) * 100 )
-        print(f'{key}: {percent}% ({value})')
-
     print(f'-------------------------')
-    winner = counter.most_common(1)[0][0] if counter else None
-    print(f'Winner: {winner}')
-    print(f'-------------------------')
+
+    with open('analysis/PyPoll_Output.txt', 'w') as output:
+        print(f'Election Results', file=output)
+        print(f'-------------------------', file=output)
+        print(f'Total Votes: {num_rows - 1}', file=output)
+        print(f'-------------------------', file=output)
+
+        for person in counter:
+            key = person
+            value = counter[key]
+            percent = '{:.3f}'.format( (int(value) / len(all_votes)) * 100 )
+            print(f'{key}: {percent}% ({value})')
+            print(f'{key}: {percent}% ({value})', file=output)
+
+        print(f'-------------------------')
+        winner = counter.most_common(1)[0][0] if counter else None
+        print(f'Winner: {winner}')
+        print(f'-------------------------')
+
+        print(f'-------------------------', file=output)
+        winner = counter.most_common(1)[0][0] if counter else None
+        print(f'Winner: {winner}', file=output)
+        print(f'-------------------------', file=output)    
