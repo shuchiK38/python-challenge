@@ -14,7 +14,7 @@ election_data = os.path.join ( 'Resources', 'election_data.csv')
 with open(election_data) as pollFile:
     csv_reader = csv.reader (pollFile, delimiter=',')
     num_rows = 0
-    all_votes = []
+    all_votes = [] #this List will store all the values in Candidate column for further calculations using Collections Counter
 
     for row in csv_reader:
         if num_rows > 0:
@@ -22,19 +22,22 @@ with open(election_data) as pollFile:
 
         num_rows += 1
     
-    counter = collections.Counter (all_votes)
+    counter = collections.Counter (all_votes) #initializing Counter 
 
+    #for terminal output
     print(f'Election Results')
     print(f'-------------------------')
     print(f'Total Votes: {num_rows - 1}')
     print(f'-------------------------')
 
+    #for output in a text file
     with open('analysis/PyPoll_Output.txt', 'w') as output:
         print(f'Election Results', file=output)
         print(f'-------------------------', file=output)
         print(f'Total Votes: {num_rows - 1}', file=output)
         print(f'-------------------------', file=output)
 
+        #iterating through counter to calculate % and total vote coutns for each candidate
         for person in counter:
             key = person
             value = counter[key]
@@ -43,11 +46,11 @@ with open(election_data) as pollFile:
             print(f'{key}: {percent}% ({value})', file=output)
 
         print(f'-------------------------')
+        #find out who is the Winner
         winner = counter.most_common(1)[0][0] if counter else None
         print(f'Winner: {winner}')
         print(f'-------------------------')
 
         print(f'-------------------------', file=output)
-        winner = counter.most_common(1)[0][0] if counter else None
         print(f'Winner: {winner}', file=output)
         print(f'-------------------------', file=output)    
